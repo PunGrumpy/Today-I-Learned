@@ -6,13 +6,11 @@ This web app is a collection of my notes on various topics. I use it to keep tra
 
 ## Tech
 
-```
-- HTML
-- CSS
-- JavaScript
-- Superbase
-- React (rebuild web app to react js)
-```
+- [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
+- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [Superbase](https://superbase.io/)
+- [React](https://reactjs.org/) for rebuild to react app in next version
 
 ## Features
 
