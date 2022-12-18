@@ -1,5 +1,10 @@
+* {
+}
+
 body {
+  color: #fafafa;
   background-color: #18181b;
+  font-family: 'Sono', sans-serif;
 }
 
 .fact-form {
@@ -11,14 +16,11 @@ h1 {
   text-transform: uppercase;
   text-align: center;
   font-family: 'Coiny', sans-serif;
-  color: #fafafa;
 }
 
 .fact {
   font-size: 20px;
   line-height: 1.4;
-  font-family: 'Sono', sans-serif;
-  color: #fafafa;
   background-color: #27272a;
 }
 
@@ -26,7 +28,6 @@ h1 {
   text-transform: uppercase;
   font-size: 14px;
   font-family: 'Coiny', sans-serif;
-  color: #fafafa;
 }
 
 ul {
