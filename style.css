@@ -46,6 +46,11 @@ h1 {
   background-color: #27272a;
   margin-bottom: 16px;
   padding: 16px 24px;
+  letter-spacing: -1px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
 }
 
 .tag {
@@ -55,6 +60,10 @@ h1 {
   padding-top: 3px;
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.vote-buttons {
+  margin-left: auto;
 }
 
 ul {
