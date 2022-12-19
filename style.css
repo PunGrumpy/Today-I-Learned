@@ -9,6 +9,7 @@ body {
   background-color: #18181b;
   font-family: 'Sono', sans-serif;
   padding: 48px;
+  font-weight: 400;
 }
 
 /* MAIN LAYOUT */
@@ -87,6 +88,26 @@ h1 {
 
 .vote-buttons {
   margin-left: auto;
+  flex-shrink: 0;
+  display: flex;
+  gap: 8px;
+}
+
+.vote-buttons button {
+  border: none;
+  background-color: #52525b;
+  font-size: 18px;
+  padding: 6px 12px;
+  border-radius: 100px;
+  color: inherit;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.vote-buttons button:hover {
+  background-color: #18181b;
 }
 
 ul {
