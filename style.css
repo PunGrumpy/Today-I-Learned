@@ -82,6 +82,7 @@ h1 {
   padding-top: 3px;
   padding-left: 10px;
   padding-right: 10px;
+  border-radius: 100px;
 }
 
 .vote-buttons {
@@ -114,6 +115,8 @@ ul {
   padding: 16px 0 13px;
   background-image: linear-gradient(135deg, #3b82f6, #ef4444, #16a34a, #eab308);
   color: inherit;
+  border-radius: 100px;
+  cursor: pointer;
   transition: 0.3s;
 }
 
