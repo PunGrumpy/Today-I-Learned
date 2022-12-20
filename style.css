@@ -12,6 +12,10 @@ body {
   font-weight: 400;
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* MAIN LAYOUT */
 .container {
   max-width: 1500px;
