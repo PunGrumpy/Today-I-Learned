@@ -47,15 +47,16 @@ const initialFacts = [
 
 function App() {
   const [showForm, setShowForm] = useState(false)
+  const [facts, setFacts] = useState(initialFacts)
 
   return (
     <>
       <Header showForm={showForm} setShowForm={setShowForm} />
-      {showForm ? <NewFactForm /> : null}
+      {showForm ? <NewFactForm setFacts={setFacts} setShowForm={setShowForm} /> : null}
 
       <main className="main">
         <CategoryFilter />
-        <FactList />
+        <FactList facts={facts} />
       </main>
     </>
   )
@@ -77,7 +78,17 @@ function Header({ showForm, setShowForm }) {
   )
 }
 
-function NewFactForm() {
+function isValidHttpUrl(string) {
+  let url
+  try {
+    url = new URL(string)
+  } catch (_) {
+    return false
+  }
+  return url.protocol === 'http:' || url.protocol === 'https:'
+}
+
+function NewFactForm({ setFacts, setShowForm }) {
   const [text, setText] = useState('')
   const [source, setSource] = useState('')
   const [category, setCategory] = useState('')
@@ -86,7 +97,27 @@ function NewFactForm() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    console.log(text, source, category)
+
+    if (text && text.length <= maxLength && isValidHttpUrl(source) && category) {
+      const newFact = {
+        id: Math.round(Math.random() * 10000000),
+        text,
+        source,
+        category,
+        votesInteresting: 0,
+        votesMindblowing: 0,
+        votesFalse: 0,
+        createdIn: new Date().getFullYear()
+      }
+
+      setFacts(facts => [newFact, ...facts])
+
+      setText('')
+      setSource('')
+      setCategory('')
+
+      setShowForm(false)
+    }
   }
 
   return (
@@ -136,9 +167,7 @@ function CategoryFilter() {
   )
 }
 
-function FactList() {
-  const facts = initialFacts
-
+function FactList({ facts }) {
   return (
     <section>
       <ul className="facts-list">
