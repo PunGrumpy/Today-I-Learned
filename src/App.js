@@ -78,7 +78,43 @@ function Header({ showForm, setShowForm }) {
 }
 
 function NewFactForm() {
-  return <form className="fact-form">NewFactForm</form>
+  const [text, setText] = useState('')
+  const [source, setSource] = useState('')
+  const [category, setCategory] = useState('')
+  const maxLength = 200
+  const textLength = text.length
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    console.log(text, source, category)
+  }
+
+  return (
+    <form className="fact-form" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Share a fact with the world..."
+        value={text}
+        onChange={e => setText(e.target.value)}
+      />
+      <span>{maxLength - textLength}</span>
+      <input
+        type="text"
+        placeholder="Trustworthy source..."
+        value={source}
+        onChange={e => setSource(e.target.value)}
+      />
+      <select value={category} onChange={e => setCategory(e.target.value)}>
+        <option value="" disabled selected>
+          Choose category:
+        </option>
+        {CATEGORIES.map(cat => (
+          <option value={cat.name}>{cat.name}</option>
+        ))}
+      </select>
+      <button className="btn btn-large">Post</button>
+    </form>
+  )
 }
 
 function CategoryFilter() {
