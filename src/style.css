@@ -226,6 +226,11 @@ h1 {
   background-color: #18181b;
 }
 
+.vote-buttons button:disabled {
+  background-color: #18181b;
+  cursor: not-allowed;
+}
+
 ul {
   list-style: none;
 }

@@ -88,7 +88,11 @@ function App() {
 
       <main className="main">
         <CategoryFilter setCurrentCategory={setCurrentCategory} />
-        {isLoading ? <Loader messageLoader={messageLoader} /> : <FactList facts={facts} />}
+        {isLoading ? (
+          <Loader messageLoader={messageLoader} />
+        ) : (
+          <FactList facts={facts} setFacts={setFacts} />
+        )}
       </main>
     </>
   )
@@ -154,7 +158,7 @@ function NewFactForm({ setFacts, setShowForm }) {
         .select()
       setIsUploading(false)
 
-      setFacts(facts => [newFact[0], ...facts])
+      if (!error) setFacts(facts => [newFact[0], ...facts])
 
       setText('')
       setSource('')
@@ -223,7 +227,7 @@ function CategoryFilter({ setCurrentCategory }) {
   )
 }
 
-function FactList({ facts }) {
+function FactList({ facts, setFacts }) {
   if (facts.length === 0)
     return (
       <p className="message" style={{ fontSize: '28px' }}>
@@ -235,7 +239,7 @@ function FactList({ facts }) {
     <section>
       <ul className="facts-list">
         {facts.map(fact => (
-          <Fact key={fact.id} fact={fact} />
+          <Fact key={fact.id} fact={fact} setFacts={setFacts} />
         ))}
       </ul>
       <p style={{ opacity: '50%' }}>
@@ -245,7 +249,22 @@ function FactList({ facts }) {
   )
 }
 
-function Fact({ fact }) {
+function Fact({ fact, setFacts }) {
+  const [isUpdating, setIsUpdating] = useState(false)
+
+  async function handlerVote(voteName) {
+    setIsUpdating(true)
+    const { data: updatedFact, error } = await supabase
+      .from('facts')
+      .update({ [voteName]: fact[voteName] + 1 })
+      .eq('id', fact.id)
+      .select()
+    setIsUpdating(false)
+    console.log(updatedFact)
+
+    if (!error) setFacts(facts => facts.map(f => (f.id === fact.id ? updatedFact[0] : f)))
+  }
+
   return (
     <li className="fact">
       <p>
@@ -261,13 +280,13 @@ function Fact({ fact }) {
         {fact.category}
       </span>
       <div className="vote-buttons">
-        <button>
+        <button onClick={() => handlerVote('votesInteresting')} disabled={isUpdating}>
           👍 <strong>{fact.votesInteresting}</strong>
         </button>
-        <button>
+        <button onClick={() => handlerVote('votesMindblowing')} disabled={isUpdating}>
           🤯 <strong>{fact.votesMindblowing}</strong>
         </button>
-        <button>
+        <button onClick={() => handlerVote('votesFalse')} disabled={isUpdating}>
           ⛔️ <strong>{fact.votesFalse}</strong>
         </button>
       </div>
