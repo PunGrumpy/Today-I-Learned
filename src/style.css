@@ -33,6 +33,10 @@ body {
   }
 }
 
+.long {
+  color: #ef4444;
+}
+
 .message {
   text-transform: uppercase;
   font-size: 32px;

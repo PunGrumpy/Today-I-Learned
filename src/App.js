@@ -111,6 +111,7 @@ function NewFactForm({ setFacts, setShowForm }) {
   const [source, setSource] = useState('')
   const [category, setCategory] = useState('')
   const [isUploading, setIsUploading] = useState(false)
+  const [isTooLong, setIsTooLong] = useState(false)
   const maxLength = 200
   const textLength = text.length
 
@@ -135,6 +136,17 @@ function NewFactForm({ setFacts, setShowForm }) {
     }
   }
 
+  useEffect(
+    function () {
+      if (maxLength - textLength < 0) {
+        setIsTooLong(true)
+      } else {
+        setIsTooLong(false)
+      }
+    },
+    [textLength]
+  )
+
   return (
     <form className="fact-form" onSubmit={handleSubmit}>
       <input
@@ -144,7 +156,11 @@ function NewFactForm({ setFacts, setShowForm }) {
         onChange={e => setText(e.target.value)}
         disabled={isUploading}
       />
-      <span>{maxLength - textLength}</span>
+      {maxLength - textLength >= 0 ? (
+        <span>{maxLength - textLength}</span>
+      ) : (
+        <span className="long">Too long</span>
+      )}
       <input
         type="text"
         placeholder="Trustworthy source..."
@@ -160,7 +176,7 @@ function NewFactForm({ setFacts, setShowForm }) {
           <option value={cat.name}>{cat.name}</option>
         ))}
       </select>
-      <button className="btn btn-large" disabled={isUploading}>
+      <button className="btn btn-large" disabled={isUploading || isTooLong}>
         Post
       </button>
     </form>
