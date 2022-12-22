@@ -73,9 +73,9 @@ function Loader({ messageLoader }) {
           {messageLoader}
           <p></p>
         </p>
-      ) : (
+      ) : messageLoader ? (
         <p className="message message-dotLoader">{messageLoader}</p>
-      )}
+      ) : null}
     </>
   )
 }
