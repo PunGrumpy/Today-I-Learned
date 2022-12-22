@@ -362,6 +362,7 @@ ul {
 
   .main {
     grid-template-columns: 1fr;
+    height: auto;
   }
 
   section {
