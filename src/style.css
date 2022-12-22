@@ -8,7 +8,7 @@ body {
   color: #fafafa;
   background-color: #18181b;
   font-family: 'Sono', sans-serif;
-  padding: 48px;
+  padding: 48px 64px 0px;
   font-weight: 400;
 }
 
@@ -143,12 +143,27 @@ body {
   display: grid;
   grid-template-columns: 250px 1fr;
   gap: 48px;
+  height: calc(100vh - 48px - 68px - 40px);
 }
 
 @media (max-width: 900px) {
   .main {
     grid-template-columns: 1fr;
   }
+}
+
+section {
+  overflow: scroll;
+  /* padding-bottom: 40px; */
+}
+
+section::-webkit-scrollbar {
+  display: none;
+}
+
+section {
+  -ms-overflow-style: none;
+  scorllbar-width: none;
 }
 
 /* ELEMENTS */
