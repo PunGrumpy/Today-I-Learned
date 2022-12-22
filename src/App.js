@@ -50,11 +50,26 @@ const initialFacts = [
 function App() {
   const [showForm, setShowForm] = useState(false)
   const [facts, setFacts] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [messageLoader, setMessageLoader] = useState('')
 
   useEffect(function () {
     async function getFacts() {
-      let { data: facts, error } = await supabase.from('facts').select('*')
-      setFacts(facts)
+      setIsLoading(true)
+      const { data: facts, error } = await supabase
+        .from('facts')
+        .select('*')
+        .order('votesInteresting', { ascending: false })
+        .limit(1000)
+
+      if (!error) {
+        setFacts(facts)
+        setIsLoading(false)
+        setMessageLoader('Loading')
+      } else {
+        setMessageLoader('There was a problem getting data')
+        setIsLoading(true)
+      }
     }
     getFacts()
   }, [])
@@ -66,8 +81,26 @@ function App() {
 
       <main className="main">
         <CategoryFilter />
-        <FactList facts={facts} />
+        {isLoading ? <Loader messageLoader={messageLoader} /> : <FactList facts={facts} />}
       </main>
+    </>
+  )
+}
+
+function Loader({ messageLoader }) {
+  return (
+    // <p className={messageLoader !== 'Loading' ? 'message message-alert' : 'message message-loader'}>
+    //   {messageLoader}
+    // </p>
+    <>
+      {messageLoader === 'Loading' ? (
+        <p className="message messages-loader">{messageLoader}</p>
+      ) : (
+        <p className="message message-alert">
+          {messageLoader}
+          <p></p>
+        </p>
+      )}
     </>
   )
 }
