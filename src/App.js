@@ -159,7 +159,9 @@ function NewFactForm({ setFacts, setShowForm }) {
       {maxLength - textLength >= 0 ? (
         <span>{maxLength - textLength}</span>
       ) : (
-        <span className="long">Too long</span>
+        <span className="long">
+          Too long <span>({textLength - maxLength})</span>
+        </span>
       )}
       <input
         type="text"
