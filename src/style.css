@@ -16,6 +16,23 @@ body {
   display: none !important;
 }
 
+.disputed {
+  color: #ef4444;
+  font-weight: 600;
+  margin-right: 10px;
+  text-shadow: 0 0 5px rgba(239, 68, 68, 0.7), 0 0 10px rgba(239, 68, 68, 0.6);
+  animation: disputed 0.1s ease-in-out infinite alternate;
+}
+
+@keyframes disputed {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
 .message {
   text-transform: uppercase;
   font-size: 32px;
