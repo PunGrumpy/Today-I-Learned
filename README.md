@@ -48,7 +48,17 @@ $ npm install -g yarn
 $ yarn start
 ```
 
+## Support
+
+If you like this project, please click the ⭐️ button.
+
 ## License
 
 - [MIT](LICENSE)
 - [Jonas Schmedtmann](https://codingheroes.io/)
+
+---
+
+## Blog
+
+You can read more about this project in my [Blog](https://community.inkdrop.app/note/c4185c98a862a054ebbd93f573bc911a/note:hEzWYiVOt)
