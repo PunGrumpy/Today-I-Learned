@@ -52,27 +52,34 @@ function App() {
   const [facts, setFacts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [messageLoader, setMessageLoader] = useState('')
+  const [currentCategory, setCurrentCategory] = useState('all')
 
-  useEffect(function () {
-    async function getFacts() {
-      setIsLoading(true)
-      const { data: facts, error } = await supabase
-        .from('facts')
-        .select('*')
-        .order('votesInteresting', { ascending: false })
-        .limit(1000)
-
-      if (!error) {
-        setFacts(facts)
-        setIsLoading(false)
-        setMessageLoader('Loading')
-      } else {
-        setMessageLoader('There was a problem getting data')
+  useEffect(
+    function () {
+      async function getFacts() {
         setIsLoading(true)
+
+        let query = supabase.from('facts').select('*')
+
+        if (currentCategory !== 'all') query = query.eq('category', currentCategory)
+
+        const { data: facts, error } = await query
+          .order('votesInteresting', { ascending: false })
+          .limit(1000)
+
+        if (!error) {
+          setFacts(facts)
+          setIsLoading(false)
+          setMessageLoader('Loading')
+        } else {
+          setMessageLoader('There was a problem getting data')
+          setIsLoading(true)
+        }
       }
-    }
-    getFacts()
-  }, [])
+      getFacts()
+    },
+    [currentCategory]
+  )
 
   return (
     <>
@@ -80,7 +87,7 @@ function App() {
       {showForm ? <NewFactForm setFacts={setFacts} setShowForm={setShowForm} /> : null}
 
       <main className="main">
-        <CategoryFilter />
+        <CategoryFilter setCurrentCategory={setCurrentCategory} />
         {isLoading ? <Loader messageLoader={messageLoader} /> : <FactList facts={facts} />}
       </main>
     </>
@@ -89,9 +96,6 @@ function App() {
 
 function Loader({ messageLoader }) {
   return (
-    // <p className={messageLoader !== 'Loading' ? 'message message-alert' : 'message message-loader'}>
-    //   {messageLoader}
-    // </p>
     <>
       {messageLoader === 'Loading' ? (
         <p className="message messages-loader">{messageLoader}</p>
@@ -191,16 +195,24 @@ function NewFactForm({ setFacts, setShowForm }) {
   )
 }
 
-function CategoryFilter() {
+function CategoryFilter({ setCurrentCategory }) {
   return (
     <aside>
       <ul>
         <li className="category">
-          <button className="btn btn-all-categories">All</button>
+          <button className="btn btn-all-categories" onClick={() => setCurrentCategory('all')}>
+            All
+          </button>
         </li>
         {CATEGORIES.map(cat => (
           <li className="category">
-            <button className="btn btn-category" style={{ backgroundColor: cat.color }}>
+            <button
+              className="btn btn-category"
+              style={{ backgroundColor: cat.color }}
+              onClick={() => {
+                setCurrentCategory(cat.name)
+              }}
+            >
               {cat.name}
             </button>
           </li>
@@ -211,6 +223,13 @@ function CategoryFilter() {
 }
 
 function FactList({ facts }) {
+  if (facts.length === 0)
+    return (
+      <p className="message" style={{ fontSize: '28px' }}>
+        No facts for this category yet! Create the first one 🫰
+      </p>
+    )
+
   return (
     <section>
       <ul className="facts-list">
