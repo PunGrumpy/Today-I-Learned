@@ -68,13 +68,13 @@ function App() {
 function Loader({ messageLoader }) {
   return (
     <>
-      {messageLoader === 'Loading' ? (
-        <p className="message message-dotLoader">{messageLoader}</p>
-      ) : (
+      {messageLoader !== 'Loading' ? (
         <p className="message message-barLoader">
           {messageLoader}
           <p></p>
         </p>
+      ) : (
+        <p className="message message-dotLoader">{messageLoader}</p>
       )}
     </>
   )
