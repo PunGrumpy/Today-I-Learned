@@ -98,9 +98,9 @@ function Loader({ messageLoader }) {
   return (
     <>
       {messageLoader === 'Loading' ? (
-        <p className="message messages-loader">{messageLoader}</p>
+        <p className="message message-dotLoader">{messageLoader}</p>
       ) : (
-        <p className="message message-alert">
+        <p className="message message-barLoader">
           {messageLoader}
           <p></p>
         </p>

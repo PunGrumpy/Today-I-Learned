@@ -41,7 +41,7 @@ body {
   }
 }
 
-.message-loader::after {
+.message-dotLoader::after {
   content: '.';
   animation: dots 1.5s steps(5, end) infinite;
 }
@@ -65,13 +65,13 @@ body {
   }
 }
 
-.message-alert {
+.message-barLoader {
   flex-direction: column;
   position: relative;
   overflow: hidden;
 }
 
-.message-alert p {
+.message-barLoader p {
   margin-top: 2rem;
   width: 60%;
   height: 16px;
@@ -83,7 +83,7 @@ body {
   box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.2);
 }
 
-.message-alert p::after {
+.message-barLoader p::after {
   content: '';
   position: absolute;
   top: 0;
